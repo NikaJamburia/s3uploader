@@ -10,6 +10,6 @@ interface FileStorage {
 data class NewFileParameters(
     val inputStream: InputStream,
     val contentLength: Long,
-    val contentType: String,
+    val contentType: ContentType,
     val fileName: String
 )

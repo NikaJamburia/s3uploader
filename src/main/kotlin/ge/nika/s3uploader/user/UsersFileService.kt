@@ -9,7 +9,6 @@ import ge.nika.s3uploader.user.persistence.toDto
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking
-import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 import java.time.Instant
 
@@ -42,7 +41,7 @@ class UsersFileService(
         toTime: Instant
     ): List<UsersFile> {
         return repository
-            .findAllByUserNameAndUploadTimeGreaterThanEqualAndUploadTimeLessThanEqual(
+            .listUsersFilesFromPeriod(
                 userName = userName,
                 fromTime = fromTime,
                 toTime = toTime
@@ -50,7 +49,7 @@ class UsersFileService(
     }
 
     private fun NewFileParameters.usersFileType(): UsersFileType =
-        if(contentType.startsWith("image")) {
+        if(contentType.text.startsWith("image")) {
             UsersFileType.IMAGE
         } else {
             UsersFileType.OTHER

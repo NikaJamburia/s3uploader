@@ -1,6 +1,8 @@
 package ge.nika.s3uploader.web
 
+import ge.nika.s3uploader.storage.ContentType
 import ge.nika.s3uploader.storage.NewFileParameters
+import ge.nika.s3uploader.storage.toContentType
 import ge.nika.s3uploader.user.UsersFile
 import ge.nika.s3uploader.user.UsersFileService
 import org.springframework.web.bind.annotation.PostMapping
@@ -21,7 +23,7 @@ class UsersFilesController(
             inputStream = file.inputStream,
             contentLength = file.size,
             fileName = file.name,
-            contentType = file.contentType ?: error("Content type not provided!")
+            contentType = file.contentType?.toContentType() ?: error("Content type not provided!")
         )
         return usersFileService.uploadFile(request.userName, fileParams)
     }

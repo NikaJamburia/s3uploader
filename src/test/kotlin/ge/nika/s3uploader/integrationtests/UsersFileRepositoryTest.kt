@@ -1,5 +1,7 @@
-package ge.nika.s3uploader
+package ge.nika.s3uploader.integrationtests
 
+import ge.nika.s3uploader.toUtc
+import ge.nika.s3uploader.toUtcInstant
 import ge.nika.s3uploader.user.persistence.UsersFileDocument
 import ge.nika.s3uploader.user.persistence.UsersFileRepository
 import ge.nika.s3uploader.user.persistence.UsersFileType
@@ -56,10 +58,9 @@ class UsersFileRepositoryTest(
             fakeUsersFileDocument(uploadTime = "2023-03-10T13:01:00".toUtcInstant(), userName = "nika"),
             fakeUsersFileDocument(uploadTime = "2023-03-11T12:00:00".toUtcInstant(), userName = "nika"),
 
-
         ))
 
-        val result = subject.findAllByUserNameAndUploadTimeGreaterThanEqualAndUploadTimeLessThanEqual(
+        val result = subject.listUsersFilesFromPeriod(
             userName = user,
             fromTime = from,
             toTime = to,

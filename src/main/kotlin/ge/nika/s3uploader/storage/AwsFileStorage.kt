@@ -16,12 +16,17 @@ class AwsFileStorage(
 ) : FileStorage {
 
     override fun upload(params: NewFileParameters): String {
-        val objectKey = "${UUID.randomUUID()}.${getExtensionFrom(params.contentType)}"
-        val metadata = ObjectMetadata().apply {
-            contentLength = params.contentLength
-            contentType = params.contentType
-        }
-        val request = PutObjectRequest(bucketName, objectKey, params.inputStream, metadata)
+        val objectKey = "${UUID.randomUUID()}.${params.contentType.extension}"
+
+        val request = PutObjectRequest(
+            bucketName,
+            objectKey,
+            params.inputStream,
+            ObjectMetadata().apply {
+                contentLength = params.contentLength
+                contentType = params.contentType.text
+            }
+        )
 
         s3Client.putObject(request)
         return objectKey

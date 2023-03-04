@@ -1,7 +1,8 @@
-package ge.nika.s3uploader
+package ge.nika.s3uploader.integrationtests
 
 import com.amazonaws.services.s3.AmazonS3
 import ge.nika.s3uploader.storage.AwsFileStorage
+import ge.nika.s3uploader.storage.ContentType
 import ge.nika.s3uploader.storage.NewFileParameters
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
@@ -12,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.core.io.Resource
 
 @SpringBootTest
-class AwsFileStorageTest(
+class AwsFileStorageIntegrationTest(
     @Autowired private val subject: AwsFileStorage,
     @Autowired private val s3Client: AmazonS3,
     @Value("\${s3.bucket-name}") private val bucketName: String,
@@ -24,26 +25,12 @@ class AwsFileStorageTest(
         val fileParams = NewFileParameters(
             inputStream = testFile.inputStream,
             contentLength = testFile.contentLength(),
-            contentType = "image/jpg",
+            contentType = ContentType.IMAGE_JPG,
+            fileName = testFile.filename!!
         )
 
         val fileKey = subject.upload(fileParams)
 
         s3Client.doesObjectExist(bucketName, fileKey) shouldBe true
-    }
-
-    @Test
-    fun `throws exception when content type is unknown`() {
-        val fileParams = NewFileParameters(
-            inputStream = testFile.inputStream,
-            contentLength = testFile.contentLength(),
-            contentType = "some/thing",
-        )
-
-        val exception = shouldThrow<IllegalStateException> {
-            subject.upload(fileParams)
-        }
-
-        exception.message shouldBe "File extension not defined for some/thing"
     }
 }

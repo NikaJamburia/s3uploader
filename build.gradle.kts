@@ -24,6 +24,7 @@ dependencies {
 
 	implementation("com.amazonaws:aws-java-sdk-s3:1.12.418")
 
+	testImplementation("io.mockk:mockk:1.12.0")
 	testImplementation("io.kotest:kotest-runner-junit5:5.5.4")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
