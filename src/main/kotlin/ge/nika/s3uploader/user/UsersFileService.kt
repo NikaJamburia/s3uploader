@@ -6,9 +6,7 @@ import ge.nika.s3uploader.user.persistence.UsersFileDocument
 import ge.nika.s3uploader.user.persistence.UsersFileRepository
 import ge.nika.s3uploader.user.persistence.UsersFileType
 import ge.nika.s3uploader.user.persistence.toDto
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import org.springframework.stereotype.Service
 import java.time.Instant
 
@@ -29,7 +27,7 @@ class UsersFileService(
 
     fun getSignedUrl(fileKey: String): String = fileStorage.getSignedUrl(fileKey)
 
-    fun getSignedUrls(fileKeys: Set<String>): Map<String, String> = runBlocking {
+    suspend fun getSignedUrls(fileKeys: Set<String>): Map<String, String> = withContext(Dispatchers.IO) {
         fileKeys.map { fileKey ->
             async { fileKey to fileStorage.getSignedUrl(fileKey) }
         }.awaitAll().toMap()

@@ -1,5 +1,6 @@
 package ge.nika.s3uploader.integrationtests
 
+import ge.nika.s3uploader.fixtures.fakeUsersFileDocument
 import ge.nika.s3uploader.toUtc
 import ge.nika.s3uploader.toUtcInstant
 import ge.nika.s3uploader.user.persistence.UsersFileDocument
@@ -72,20 +73,4 @@ class UsersFileRepositoryTest(
         result.firstOrNull { it.uploadTime == "2023-03-05T12:00:00".toUtcInstant() } shouldNotBe null
         result.firstOrNull { it.uploadTime == "2023-03-10T12:59:00".toUtcInstant() } shouldNotBe null
     }
-
-    private fun fakeUsersFileDocument(
-        id: UUID = UUID.randomUUID(),
-        userName: String = UUID.randomUUID().toString(),
-        fileKey: String = UUID.randomUUID().toString(),
-        fileName: String = UUID.randomUUID().toString(),
-        type: UsersFileType = UsersFileType.IMAGE,
-        uploadTime: Instant = Instant.now().toUtc()
-    ) = UsersFileDocument(
-            id = id,
-            userName = userName,
-            fileKey = fileKey,
-            fileName = fileName,
-            type = type,
-            uploadTime = uploadTime
-        )
 }

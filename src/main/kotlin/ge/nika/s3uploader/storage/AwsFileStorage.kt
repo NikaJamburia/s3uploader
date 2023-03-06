@@ -36,4 +36,9 @@ class AwsFileStorage(
         val request = GeneratePresignedUrlRequest(bucketName, fileKey, HttpMethod.GET)
         return s3Client.generatePresignedUrl(request).toString()
     }
+
+    override fun exists(fileKey: String): Boolean = s3Client.doesObjectExist(bucketName, fileKey)
+
+    override fun delete(fileKey: String) = s3Client.deleteObject(bucketName, fileKey)
+
 }

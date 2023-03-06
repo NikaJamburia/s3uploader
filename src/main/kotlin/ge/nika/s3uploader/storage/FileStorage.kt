@@ -5,6 +5,8 @@ import java.io.InputStream
 interface FileStorage {
     fun upload(params: NewFileParameters): String
     fun getSignedUrl(fileKey: String): String
+    fun exists(fileKey: String): Boolean
+    fun delete(fileKey: String)
 }
 
 data class NewFileParameters(

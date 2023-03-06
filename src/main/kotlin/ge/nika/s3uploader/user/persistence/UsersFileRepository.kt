@@ -9,6 +9,8 @@ interface UsersFileRepository : MongoRepository<UsersFileDocument, UUID> {
 
     fun getById(id: UUID): UsersFileDocument
 
+    fun getByFileKey(fileKey: String): UsersFileDocument
+
     @Query(value = "{ userName: ?0, 'uploadTime': { \$gte: ?1, \$lte: ?2 }}")
     fun listUsersFilesFromPeriod(
         userName: String,
