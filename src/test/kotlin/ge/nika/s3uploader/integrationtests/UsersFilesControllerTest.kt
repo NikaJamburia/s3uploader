@@ -47,13 +47,6 @@ class UsersFilesControllerTest(
     @Test
     fun `uploads given file for a user`() {
 
-        val requestFile = MockMultipartFile(
-            "request",
-            "",
-            "application/json",
-            UploadFileRequest("nika").toJson().byteInputStream()
-        )
-
         val file = MockMultipartFile(
             "file",
             "test-file.txt",
@@ -63,7 +56,7 @@ class UsersFilesControllerTest(
 
         val responseJson = mockMvc.multipart("/upload") {
             file(file)
-            file(requestFile)
+            param("request", UploadFileRequest("nika").toJson())
         }.andExpect { status { isOk() } }.andReturn().response.contentAsString
 
         fromJson<UsersFile>(responseJson).asClue {
