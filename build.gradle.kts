@@ -7,36 +7,48 @@ plugins {
 	kotlin("plugin.spring") version "1.6.21"
 }
 
-group = "ge.nika"
-version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_11
-
 repositories {
 	mavenCentral()
 }
 
-dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
-	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
-	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+allprojects {
 
-	implementation("com.amazonaws:aws-java-sdk-s3:1.12.418")
+	apply(plugin = "org.jetbrains.kotlin.jvm")
+	apply(plugin = "org.jetbrains.kotlin.plugin.spring")
 
-	testImplementation("io.mockk:mockk:1.12.0")
-	testImplementation("io.kotest:kotest-runner-junit5:5.5.4")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-}
+	group = "ge.nika"
+	version = "0.0.1-SNAPSHOT"
+	java.sourceCompatibility = JavaVersion.VERSION_11
 
-tasks.withType<KotlinCompile> {
-	kotlinOptions {
-		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "11"
+	repositories {
+		mavenCentral()
 	}
-}
 
-tasks.withType<Test> {
-	useJUnitPlatform()
+	dependencies {
+		implementation("org.springframework.boot:spring-boot-starter-data-mongodb:2.7.9")
+		implementation("org.springframework.boot:spring-boot-starter-web:2.7.9")
+
+		implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+		implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+
+		implementation("org.jetbrains.kotlin:kotlin-reflect")
+		implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+
+		implementation("com.amazonaws:aws-java-sdk-s3:1.12.418")
+
+		testImplementation("io.mockk:mockk:1.12.0")
+		testImplementation("io.kotest:kotest-runner-junit5:5.5.4")
+		testImplementation("org.springframework.boot:spring-boot-starter-test:2.7.9")
+	}
+
+	tasks.withType<KotlinCompile> {
+		kotlinOptions {
+			freeCompilerArgs = listOf("-Xjsr305=strict")
+			jvmTarget = "11"
+		}
+	}
+
+	tasks.withType<Test> {
+		useJUnitPlatform()
+	}
 }
