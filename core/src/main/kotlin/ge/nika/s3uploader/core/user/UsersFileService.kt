@@ -1,6 +1,6 @@
 package ge.nika.s3uploader.core.user
 
-import ge.nika.s3uploader.core.storage.AwsFileStorage
+import ge.nika.s3uploader.core.storage.FileStorage
 import ge.nika.s3uploader.core.storage.NewFileParameters
 import ge.nika.s3uploader.core.user.persistence.UsersFileDocument
 import ge.nika.s3uploader.core.user.persistence.UsersFileRepository
@@ -13,7 +13,7 @@ import java.time.Instant
 @Service
 class UsersFileService(
     private val repository: UsersFileRepository,
-    private val fileStorage: AwsFileStorage
+    private val fileStorage: FileStorage
 ) {
     fun uploadFile(userName: String, fileParams: NewFileParameters): UsersFile {
         val fileKey = fileStorage.upload(fileParams)

@@ -7,6 +7,7 @@ import ge.nika.s3uploader.core.toUtc
 import ge.nika.s3uploader.core.user.UsersFile
 import ge.nika.s3uploader.core.user.UsersFileService
 import kotlinx.coroutines.runBlocking
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.time.Instant
@@ -15,6 +16,9 @@ import java.time.Instant
 class UsersFilesController(
     private val usersFileService: UsersFileService,
 ) {
+
+    @GetMapping("/ping")
+    fun ping(): ResponseEntity<String> = ResponseEntity.ok("pong")
 
     @PostMapping("/upload")
     fun uploadFile(

@@ -26,7 +26,6 @@ allprojects {
 
 	dependencies {
 		implementation("org.springframework.boot:spring-boot-starter-data-mongodb:2.7.9")
-		implementation("org.springframework.boot:spring-boot-starter-web:2.7.9")
 
 		implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 		implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
